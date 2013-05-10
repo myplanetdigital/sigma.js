@@ -22,10 +22,10 @@ sigma.publicPrototype.parseGexf = function(gexfPath) {
   // This is confusing, so I'll comment heavily
   var nodesAttributes = [];   // The list of attributes of the nodes of the graph that we build in json
   var edgesAttributes = [];   // The list of attributes of the edges of the graph that we build in json
-	var attributesNodes = [];
+  var attributesNodes = [];
   
   try {
-    var attributesNodes = gexf.getElementsByTagName('attributes');  // In the gexf (that is an xml), the list of xml nodes 'attributes' (note the plural 's')
+    attributesNodes = gexf.getElementsByTagName('attributes');  // In the gexf (that is an xml), the list of xml nodes 'attributes' (note the plural 's')
 
 		for(i = 0; i<attributesNodes.length; i++){
 		  var attributesNode = attributesNodes[i];  // attributesNode is each xml node 'attributes' (plural)
