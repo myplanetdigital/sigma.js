@@ -22,38 +22,43 @@ sigma.publicPrototype.parseGexf = function(gexfPath) {
   // This is confusing, so I'll comment heavily
   var nodesAttributes = [];   // The list of attributes of the nodes of the graph that we build in json
   var edgesAttributes = [];   // The list of attributes of the edges of the graph that we build in json
-  var attributesNodes = gexf.getElementsByTagName('attributes');  // In the gexf (that is an xml), the list of xml nodes 'attributes' (note the plural 's')
+	var attributesNodes = [];
+  
+  try {
+    var attributesNodes = gexf.getElementsByTagName('attributes');  // In the gexf (that is an xml), the list of xml nodes 'attributes' (note the plural 's')
 
-  for(i = 0; i<attributesNodes.length; i++){
-    var attributesNode = attributesNodes[i];  // attributesNode is each xml node 'attributes' (plural)
-    if(attributesNode.getAttribute('class') == 'node'){
-      var attributeNodes = attributesNode.getElementsByTagName('attribute');  // The list of xml nodes 'attribute' (no 's')
-      for(j = 0; j<attributeNodes.length; j++){
-        var attributeNode = attributeNodes[j];  // Each xml node 'attribute'
+		for(i = 0; i<attributesNodes.length; i++){
+		  var attributesNode = attributesNodes[i];  // attributesNode is each xml node 'attributes' (plural)
+		  if(attributesNode.getAttribute('class') == 'node'){
+		    var attributeNodes = attributesNode.getElementsByTagName('attribute');  // The list of xml nodes 'attribute' (no 's')
+		    for(j = 0; j<attributeNodes.length; j++){
+		      var attributeNode = attributeNodes[j];  // Each xml node 'attribute'
 
-        var id = attributeNode.getAttribute('id'),
-          title = attributeNode.getAttribute('title'),
-          type = attributeNode.getAttribute('type');
+		      var id = attributeNode.getAttribute('id'),
+		        title = attributeNode.getAttribute('title'),
+		        type = attributeNode.getAttribute('type');
 
-        var attribute = {id:id, title:title, type:type};
-        nodesAttributes.push(attribute);
+		      var attribute = {id:id, title:title, type:type};
+		      nodesAttributes.push(attribute);
 
-      }
-    } else if(attributesNode.getAttribute('class') == 'edge'){
-      var attributeNodes = attributesNode.getElementsByTagName('attribute');  // The list of xml nodes 'attribute' (no 's')
-      for(j = 0; j<attributeNodes.length; j++){
-        var attributeNode = attributeNodes[j];  // Each xml node 'attribute'
+		    }
+		  } else if(attributesNode.getAttribute('class') == 'edge'){
+		    var attributeNodes = attributesNode.getElementsByTagName('attribute');  // The list of xml nodes 'attribute' (no 's')
+		    for(j = 0; j<attributeNodes.length; j++){
+		      var attributeNode = attributeNodes[j];  // Each xml node 'attribute'
 
-        var id = attributeNode.getAttribute('id'),
-          title = attributeNode.getAttribute('title'),
-          type = attributeNode.getAttribute('type');
+		      var id = attributeNode.getAttribute('id'),
+		        title = attributeNode.getAttribute('title'),
+		        type = attributeNode.getAttribute('type');
 
-        var attribute = {id:id, title:title, type:type};
-        edgesAttributes.push(attribute);
+		      var attribute = {id:id, title:title, type:type};
+		      edgesAttributes.push(attribute);
 
-      }
-    }
+		    }
+		  }
+		}
   }
+  catch (e) {}
 
   var nodes = []; // The nodes of the graph
   var nodesNodes = gexf.getElementsByTagName('nodes') // The list of xml nodes 'nodes' (plural)
